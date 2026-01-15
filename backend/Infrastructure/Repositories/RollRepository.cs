@@ -1,22 +1,71 @@
 using backend.Domain.Entities;
+using backend.Domain.Entities.Infrastructure;
 using backend.Domain.Interfaces.Repositories;
+using backend.Infrastructure.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Infrastructure.Repositories
 {
     public class RollRepository : IRollRepository
     {
-        // private readonly IDBcontext
-        private readonly Dictionary<int, Musica> DBMock = new()
+        private readonly RollDBContext _context;
+        public RollRepository(RollDBContext context)
         {
-            {1, new Musica{Id = 1, IdArtista = 1, NomeArtista = "Jeff msc", Titulo = "Your iza", UrlMusica = "https://youtube.com/watch?v=qUOTbRW0HSw"}}
-        };
-        public async Task<Musica> ObterMusicaPorId(int id)
+            _context = context;
+        }
+
+        public async Task<Musica?> ObterMusicaPorId(int id)
         {
-            if(DBMock.TryGetValue(id, out var musica))
+            try
             {
-                return musica;
+                var musica = await _context.Musicas
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.Id == id);
+
+                if (musica == null) return null;
+
+                return new Musica(
+                    musica.Titulo,
+                    musica.UrlMusica,
+                    [new(1, "Jeff")]);
+
+
             }
-            throw new Exception($"Não existe nenhuma musica com id {id}");
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> InserirMusica(Musica musica)
+        {
+            try
+            {
+                await _context.Musicas.AddAsync(new MusicaDB
+                {
+                    Titulo = musica.Titulo,
+                    UrlMusica = musica.UrlMusica,
+                    UrlImagem = musica.UrlImagem,
+                });
+
+                var insert = await _context.SaveChangesAsync();
+                return insert > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> InserirArtistasMusica(int idMusica, List<Artista> artistas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Artista>?> ObterArtistasPorMusicaId(int idMusica)
+        {
+            throw new NotImplementedException();
         }
 
     }

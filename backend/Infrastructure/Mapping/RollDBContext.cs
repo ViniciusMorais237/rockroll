@@ -1,15 +1,15 @@
 using backend.Domain.Entities;
+using backend.Domain.Entities.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Infrastructure.Mapping;
 
 public class RollDBContext : DbContext
 {
-    protected RollDBContext(DbContextOptions<RollDBContext> options) : base(options)
+    public RollDBContext(DbContextOptions<RollDBContext> options) : base(options)
     {
     }
-
-    public DbSet<Musica> Musicas => Set<Musica>();
+    public DbSet<MusicaDB> Musicas => Set<MusicaDB>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

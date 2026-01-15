@@ -3,7 +3,6 @@ using backend.Domain.Entities;
 using backend.Domain.Entities.DTOs;
 using backend.Domain.Interfaces.Repositories;
 using backend.Domain.Interfaces.Services;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace backend.Domain.Services
 {
@@ -22,14 +21,12 @@ namespace backend.Domain.Services
         {
             var urlMusica = await ArmazenarERetornarUrlMusica(command.FileMusica);
 
-            var musicaMapeada = new Musica()
-            {
-                IdArtista = command.IdArtista,
-                NomeArtista = command.NomeArtista,
-                Titulo = command.Titulo,
-                UrlMusica = urlMusica
-            };
-            return true;
+            var musica = Musica.Criar(
+                command.Titulo,
+                urlMusica,
+                [new(command.IdArtista, command.NomeArtista)]);
+
+            return await _rollRepository.InserirMusica(musica);
         }
 
 
