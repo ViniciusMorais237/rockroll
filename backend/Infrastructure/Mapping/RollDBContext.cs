@@ -10,6 +10,7 @@ public class RollDBContext : DbContext
     {
     }
     public DbSet<MusicaDB> Musicas => Set<MusicaDB>();
+    public DbSet<ArtistaDB> Artistas => Set<ArtistaDB>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

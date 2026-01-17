@@ -14,7 +14,7 @@ namespace backend.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Musica?> ObterMusicaPorId(int id)
+        public async Task<Musica?> ObterInfoMusicaPorId(int id)
         {
             try
             {
@@ -28,8 +28,6 @@ namespace backend.Infrastructure.Repositories
                     musica.Titulo,
                     musica.UrlMusica,
                     [new(1, "Jeff")]);
-
-
             }
             catch (Exception)
             {

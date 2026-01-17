@@ -2,6 +2,14 @@ namespace backend.Domain.Entities
 {
     public class Musica
     {
+
+        public Musica(int id, string titulo, string urlMusica, List<Artista> artistas)
+        {
+            Id = id;
+            Titulo = titulo;
+            UrlMusica = urlMusica;
+            Artistas = artistas;
+        }
         public Musica(string titulo, string urlMusica, List<Artista> artistas)
         {
             Titulo = titulo;
@@ -17,6 +25,11 @@ namespace backend.Domain.Entities
         public static Musica Criar(string titulo, string urlMusica, List<Artista> artistas)
         {
             return new Musica(titulo, urlMusica, artistas);
+        }
+
+        public static Musica CriarComId(int id,string titulo, string urlMusica, List<Artista> artistas)
+        {
+            return new Musica(id, titulo, urlMusica, artistas);
         }
 
         public void AdicionarArtista(Artista artista)

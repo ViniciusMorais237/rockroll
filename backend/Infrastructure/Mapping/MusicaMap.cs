@@ -9,8 +9,7 @@ namespace backend.Infrastructure.Mapping
     {
         public void Configure(EntityTypeBuilder<MusicaDB> builder)
         {
-            builder.ToTable("[RollRock].[dbo].[Musica]");
-
+            builder.ToTable("Musica");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id)
@@ -38,7 +37,6 @@ namespace backend.Infrastructure.Mapping
             builder.Property(x => x.Ativo)
                 .HasColumnName("IC_ATIVO")
                 .IsRequired();
-
         }
 
     }

@@ -1,4 +1,4 @@
-namespace backend.Domain.Entities.DTOs
+namespace backend.Domain.Entities.DTOs.Commands
 {
     public class CriarMusicaCommand
     {
@@ -6,5 +6,6 @@ namespace backend.Domain.Entities.DTOs
         public int IdArtista { get; set; }
         public string NomeArtista { get; set; } = string.Empty;
         public required IFormFile FileMusica { get; set; }
+        public IFormFile? FileImagem { get; set; }
     }
 }

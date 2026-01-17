@@ -4,7 +4,7 @@ namespace backend.Domain.Interfaces.Repositories
 {
     public interface IRollRepository
     {
-         Task<Musica?> ObterMusicaPorId(int id);
+         Task<Musica?> ObterInfoMusicaPorId(int id);
          Task<IEnumerable<Artista>?> ObterArtistasPorMusicaId(int idMusica);
          Task<bool> InserirMusica(Musica musica);
          Task<bool> InserirArtistasMusica(int idMusica, List<Artista> artistas);

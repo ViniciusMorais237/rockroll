@@ -14,6 +14,11 @@ namespace backend.API.Config
             services.AddScoped<IRollService, RollService>();
             services.AddScoped<IRollRepository, RollRepository>();
 
+            services.AddScoped<IArtistasService, ArtistasService>();
+            services.AddScoped<IArtistasRepository, ArtistasRepository>();
+
+            services.AddScoped<IArquivoService, ArquivoService>();
+
             services.AddDbContext<RollDBContext>(options =>
             options.UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection")
