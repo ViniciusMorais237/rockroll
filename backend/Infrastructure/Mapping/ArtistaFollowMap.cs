@@ -32,7 +32,7 @@ namespace backend.Infrastructure.Mapping
                 .HasColumnType("int")
                 .IsRequired();
 
-            builder.Property(f => f.DataAtualizacao)
+            builder.Property(f => f.DtAtualizacao)
                .HasColumnName("DT_HR_ATUALIZACAO")
                 .HasColumnType("datetime()")
                 .IsRequired();

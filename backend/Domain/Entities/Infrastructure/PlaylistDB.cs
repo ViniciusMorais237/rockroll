@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace backend.Domain.Entities.Infrastructure
 {
-    public class ArtistaFollowDB
+    public class PlaylistDB
     {
         public int Id { get; set; }
-        public int IdArtista { get; set; }
         public int IdUsuario { get; set; }
-        public DateTime DtAtualizacao { get; set; } = DateTime.Now;
+        public string? Titulo { get; set; } = string.Empty;
+        public string? Imagem { get; set; } = string.Empty;
+        public DateTime DtInsercao { get; set; } = DateTime.Now;
         public bool Ativo { get; set; } = true;
     }
 }

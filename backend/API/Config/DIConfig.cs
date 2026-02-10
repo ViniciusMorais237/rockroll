@@ -4,6 +4,7 @@ using backend.Domain.Services;
 using backend.Domain.UseCases.ArtistasCommands;
 using backend.Domain.UseCases.ArtistasQueries;
 using backend.Domain.UseCases.MusicasQueries;
+using backend.Domain.UseCases.PlaylistQueries;
 using backend.Infrastructure.Mapping;
 using backend.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +21,15 @@ namespace backend.API.Config
             services.AddScoped<IArtistasService, ArtistasService>();
             services.AddScoped<IArtistasRepository, ArtistasRepository>();
 
+            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+
             services.AddScoped<IArquivoService, ArquivoService>();
 
 
             //USE CASES
             services.AddScoped<ObterArtistaPorId>();
+            services.AddScoped<CriarPlaylist>();
+            services.AddScoped<AdicionarMusicaPlaylist>();
             services.AddScoped<FollowArtista>();
 
             //MUSICAS

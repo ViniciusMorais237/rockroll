@@ -28,5 +28,20 @@ namespace backend.Domain.Services
 
             return $"{fileName}";
         }
+
+        public Task<string> RetornarCaminho()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> RetornarCaminho(string pasta)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RetornarCaminho(string pasta, string arquivo)
+        {
+            return Path.Combine(_env.WebRootPath, "wwwroot", pasta, arquivo);
+        }
     }
 }
