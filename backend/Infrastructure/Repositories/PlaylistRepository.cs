@@ -8,6 +8,7 @@ using backend.Domain.Entities.DTOs.Queries;
 using backend.Domain.Entities.Infrastructure;
 using backend.Domain.Interfaces.Repositories;
 using backend.Infrastructure.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Infrastructure.Repositories
 {
@@ -38,6 +39,32 @@ namespace backend.Infrastructure.Repositories
             _context.MusicaPlaylist.Add(musicaPlaylist);
 
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IEnumerable<Musica?>?> ObterMusicasPlaylist(int id)
+        {
+            var idsMusicas = await _context.MusicaPlaylist
+                .AsNoTracking()
+                .Where(m => m.IdPlaylist == id)
+                .Select(m => m.IdMusica).ToListAsync();
+
+            if (idsMusicas == null) return null;
+
+            var musicasDb = await _context.Musicas
+                .AsNoTracking()
+                .Where(m => idsMusicas.Contains(m.Id))
+                .ToListAsync();
+
+            return musicasDb.Select(m => Musica.Restaurar(m.Id, m.Titulo, m.UrlMusica));
+        }
+
+        public async Task<Playlist?> ObterPlaylistPorId(int id)
+        {
+            var playlistDb = await _context.Playlist.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+
+            if (playlistDb == null) return null;
+
+            return Playlist.Criar(playlistDb.IdUsuario, playlistDb.Titulo, playlistDb.Imagem, null);
         }
     }
 }

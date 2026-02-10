@@ -9,7 +9,7 @@ using backend.Domain.Entities.DTOs.Queries;
 using backend.Domain.Interfaces.Repositories;
 using backend.Domain.Interfaces.Services;
 
-namespace backend.Domain.UseCases.PlaylistQueries
+namespace backend.Domain.UseCases.PlaylistCommands
 {
     public class CriarPlaylist
     {

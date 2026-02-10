@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using backend.Domain.Entities.DTOs;
 using backend.Domain.Interfaces.Repositories;
 
-namespace backend.Domain.UseCases.PlaylistQueries
+namespace backend.Domain.UseCases.PlaylistCommands
 {
     public class AdicionarMusicaPlaylist
     {
