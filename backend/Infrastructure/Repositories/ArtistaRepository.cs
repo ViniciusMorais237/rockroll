@@ -6,6 +6,7 @@ using backend.Domain.Entities;
 using backend.Domain.Entities.Infrastructure;
 using backend.Domain.Interfaces.Repositories;
 using backend.Infrastructure.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Infrastructure.Repositories
 {
@@ -23,17 +24,23 @@ namespace backend.Infrastructure.Repositories
             _context.Artistas.Add(new ArtistaDB
             {
                 Nome = artista.Nome,
+                IdUsuario = 1,
                 Premium = artista.Premium,
-                UrlFoto = artista.UrlFoto,
-                DtInsercao = DateTime.Now,
-                Ativo = 1
+                UrlFoto = artista.UrlFoto
             });
+
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<Artista> ObterArtistaPorId(int id)
+        public async Task<ArtistaDB?> ObterArtistaPorId(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Artistas.FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<IEnumerable<Artista>> ObterArtistasPorPesquisa(string pesquisa)
+        {
+            var artistas = await _context.Artistas.AsNoTracking().Where(a => a.Nome.StartsWith(pesquisa)).ToListAsync();
+            return artistas.Select(a => Artista.Criar(a.Id, a.Nome, false, ""));
         }
     }
 }

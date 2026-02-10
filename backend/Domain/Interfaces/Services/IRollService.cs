@@ -5,7 +5,7 @@ namespace backend.Domain.Interfaces.Services
 {
     public interface IRollService
     {
-        Task<Musica> ObterInfoMusicaPorId(int id);
-        Task<bool> InserirMusica(CriarMusicaCommand command);
+        Task<Musica?> ObterInfoMusicaPorId(int id);
+        Task<int> InserirMusica(CriarMusicaCommand command);
     }
 }

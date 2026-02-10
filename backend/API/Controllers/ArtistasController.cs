@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Domain.Entities.DTOs.Commands;
 using backend.Domain.Interfaces.Services;
+using backend.Domain.UseCases.ArtistasQueries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.API.Controllers;
@@ -13,10 +14,11 @@ namespace backend.API.Controllers;
 public class ArtistasController : ControllerBase
 {
     private readonly IArtistasService _artistaService;
-
-    public ArtistasController(IArtistasService artistaService)
+    private readonly ObterArtistaPorId _obterArtistaPorId;
+    public ArtistasController(IArtistasService artistaService, ObterArtistaPorId obterArtistaPorId)
     {
         _artistaService = artistaService;
+        _obterArtistaPorId = obterArtistaPorId;
     }
 
     [HttpPost("adicionar-artista")]
@@ -28,7 +30,7 @@ public class ArtistasController : ControllerBase
     [HttpGet("obter-artista/{id}")]
     public async Task<IActionResult> ObterArtistaPorId(int id)
     {
-        return Ok(await _artistaService.ObterArtistaPorId(id));
+        return Ok(await _obterArtistaPorId.Executar(id));
     }
 
     [HttpGet("obter-artistas/{pesquisa}")]

@@ -8,29 +8,57 @@ namespace backend.Domain.Services
 {
     public class RollService : IRollService
     {
+        private readonly IUoW _uow;
+        private readonly IWebHostEnvironment _env;
         private readonly IRollRepository _rollRepository;
         private readonly IArquivoService _arquivoService;
-        public RollService(IRollRepository rollRepository, IArquivoService arquivoService)
+        public RollService(IRollRepository rollRepository, IArquivoService arquivoService, IWebHostEnvironment env, IUoW uow)
         {
             _rollRepository = rollRepository;
             _arquivoService = arquivoService;
-
+            _env = env;
+            _uow = uow;
         }
 
-        public async Task<bool> InserirMusica(CriarMusicaCommand command)
+        public async Task<int> InserirMusica(CriarMusicaCommand command)
         {
-            var urlMusica = await _arquivoService.ArmazenarERetornarCaminho(command.FileMusica, "Musicas");
+            var urlMusica = "";
+            try
+            {
+                await _uow.Begin();
 
-            var musica = Musica.Criar(
-                command.Titulo,
-                urlMusica,
-                [new(command.IdArtista, command.NomeArtista)]);
+                urlMusica = await _arquivoService
+                    .ArmazenarERetornarCaminho(command.FileMusica, "Musicas");
 
-            return await _rollRepository.InserirMusica(musica);
+                var musica = Musica.Criar(
+                    command.Titulo,
+                    command.IdArtista,
+                    urlMusica);
+
+                var idMusica = await _rollRepository.InserirMusica(musica);
+
+                await _uow.Commit();
+
+                return idMusica;
+            }
+            catch (Exception)
+            {
+                var caminhoMusica = Path.Combine(
+                    _env.ContentRootPath,
+                    "wwwroot",
+                    "storage",
+                    "Musicas",
+                    urlMusica);
+
+                if (File.Exists(caminhoMusica))
+                    File.Delete(caminhoMusica);
+
+                await _uow.Rollback();
+
+                throw;
+            }
         }
-
-
-        public async Task<Musica> ObterInfoMusicaPorId(int id)
+        public async Task<Musica?> ObterInfoMusicaPorId(int id)
         {
             return await _rollRepository.ObterInfoMusicaPorId(id);
         }

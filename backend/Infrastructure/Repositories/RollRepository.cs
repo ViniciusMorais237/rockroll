@@ -1,4 +1,5 @@
 using backend.Domain.Entities;
+using backend.Domain.Entities.DTOs.Queries;
 using backend.Domain.Entities.Infrastructure;
 using backend.Domain.Interfaces.Repositories;
 using backend.Infrastructure.Mapping;
@@ -26,8 +27,8 @@ namespace backend.Infrastructure.Repositories
 
                 return new Musica(
                     musica.Titulo,
-                    musica.UrlMusica,
-                    [new(1, "Jeff")]);
+                    0,
+                    musica.UrlMusica);
             }
             catch (Exception)
             {
@@ -36,19 +37,22 @@ namespace backend.Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> InserirMusica(Musica musica)
+        public async Task<int> InserirMusica(Musica musica)
         {
             try
             {
-                await _context.Musicas.AddAsync(new MusicaDB
+                var musicaDb = new MusicaDB
                 {
                     Titulo = musica.Titulo,
+                    IdArtista = musica.IdArtista,
                     UrlMusica = musica.UrlMusica,
                     UrlImagem = musica.UrlImagem,
-                });
+                };
+
+                _context.Musicas.Add(musicaDb);
 
                 var insert = await _context.SaveChangesAsync();
-                return insert > 0;
+                return musicaDb.Id;
             }
             catch (Exception)
             {
@@ -66,5 +70,19 @@ namespace backend.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<IEnumerable<Musica?>?> ObterInfoMusicasPorArtistaId(int? idArtista)
+        {
+            if (idArtista == null) return [];
+            return await _context.Musicas.Where(m => m.IdArtista == idArtista).Select(m => Musica.Restaurar(m.Id, m.Titulo, m.UrlMusica)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<MusicaSelect>?> ObterSelectMusicasPorFiltro(string filtro)
+        {
+            var musicas = await _context.Musicas.Where(m => m.Titulo.Contains(filtro)).ToListAsync();
+            if (musicas == null) return null;
+
+            return musicas.Select(m => new MusicaSelect() { Id = m.Id, Nome = m.Titulo });
+
+        }
     }
 }

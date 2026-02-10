@@ -26,7 +26,7 @@ namespace backend.Domain.Services
             await using var stream = new FileStream(filePath, FileMode.Create);
             await arquivo.CopyToAsync(stream);
 
-            return $"{caminho}/{fileName}";
+            return $"{fileName}";
         }
     }
 }

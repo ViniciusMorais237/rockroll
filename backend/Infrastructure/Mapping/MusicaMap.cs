@@ -9,33 +9,43 @@ namespace backend.Infrastructure.Mapping
     {
         public void Configure(EntityTypeBuilder<MusicaDB> builder)
         {
-            builder.ToTable("Musica");
+            builder.ToTable("MUSICA");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id)
                 .HasColumnName("NU_NSU_MUSICA")
+                .HasColumnType("int")
                 .ValueGeneratedOnAdd();
 
+            builder.Property(x => x.IdArtista)
+            .HasColumnName("NU_NSU_CE_ARTISTA")
+            .HasColumnType("int");
+
             builder.Property(x => x.Titulo)
-                .HasColumnName("NO_TITULO")
+                .HasColumnName("DES_TITULO")
+                .HasColumnType("nvarchar(100)")
                 .HasMaxLength(50)
                 .IsRequired();
 
             builder.Property(x => x.UrlMusica)
-            .HasColumnName("NO_URL_MSC")
+            .HasColumnName("DES_CAMINHO_AUDIO")
+            .HasColumnType("nvarchar(100)")
             .HasMaxLength(50)
             .IsRequired();
 
             builder.Property(x => x.UrlImagem)
-            .HasColumnName("NO_URL_IMG")
+            .HasColumnName("DES_CAMINHO_IMG")
+            .HasColumnType("nvarchar(100)")
             .HasMaxLength(50);
 
             builder.Property(x => x.DtInsercao)
-            .HasColumnName("DT_INSERCAO")
+            .HasColumnName("DT_HR_CADASTRO")
+            .HasColumnType("datetime")
             .IsRequired();
 
             builder.Property(x => x.Ativo)
                 .HasColumnName("IC_ATIVO")
+                .HasColumnType("bit")
                 .IsRequired();
         }
 

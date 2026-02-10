@@ -2,21 +2,19 @@ namespace backend.Domain.Entities
 {
     public class Artista
     {
-        public Artista(string nome, string urlFoto = "")
-        {
-            Nome = nome;
-            UrlFoto = urlFoto;
-        }
-        public Artista(int id, string nome)
+        public Artista(int? id, string nome, bool premium, string urlFoto = "")
         {
             Id = id;
             Nome = nome;
+            UrlFoto = urlFoto;
+            Premium = premium;
         }
-        public int Id { get; private set; }
+        public int? Id { get; private set; }
         public string Nome { get; private set; } = string.Empty;
-        public int Premium { get; private set; }
+        public bool Premium { get; private set; }
         public string UrlFoto { get; private set; } = string.Empty;
         public int Seguidores { get; set; }
+        public List<Musica>? Musicas { get; set; }
 
         public void AlterarNome(string nome)
         {
@@ -28,14 +26,25 @@ namespace backend.Domain.Entities
             UrlFoto = url;
         }
 
-        public void DefinirComoPremium()
+        public void AdicionarMusicas(IEnumerable<Musica> musicas)
         {
-            Premium = 1;
+            Musicas ??= [];
+            Musicas.AddRange(musicas);
         }
 
-        public static Artista Criar(string nome, string urlFoto)
+        public void DefinirComoPremium()
         {
-            return new Artista(nome, urlFoto);
+            Premium = true;
+        }
+
+        public static Artista Criar(int? id, string nome, bool premium, string urlFoto)
+        {
+            return new Artista(id, nome, premium, urlFoto);
+        }
+
+        public void DefinirSeguidores()
+        {
+
         }
     }
 }

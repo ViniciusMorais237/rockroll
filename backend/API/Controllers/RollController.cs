@@ -1,5 +1,6 @@
 using backend.Domain.Entities.DTOs.Commands;
 using backend.Domain.Interfaces.Services;
+using backend.Domain.UseCases.MusicasQueries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.API.Controllers
@@ -8,10 +9,13 @@ namespace backend.API.Controllers
     public class RollController : ControllerBase
     {
         private readonly IRollService _rollService;
-        public RollController(IRollService rollService)
+        private readonly ObterMusicasPorFiltro _obterMusicasPorFiltro;
+        public RollController(IRollService rollService, ObterMusicasPorFiltro obterMusicasPorFiltro)
         {
             _rollService = rollService;
+            _obterMusicasPorFiltro = obterMusicasPorFiltro;
         }
+
         [HttpGet("obter-info-musica/{id}")]
         public async Task<IActionResult> ObterInfoMusicaPorId(int id)
         {
@@ -24,10 +28,17 @@ namespace backend.API.Controllers
             return Ok(await _rollService.InserirMusica(command));
         }
 
+        [HttpGet("obter-musicas/{filtro}")]
+        public async Task<IActionResult> ObterMusicasPorFiltro(string filtro)
+        {
+            //adicionar filtro em outros campos a partir de 2 musicas -- por enquanto so no nome da musica e do usuario
+            return Ok(await _obterMusicasPorFiltro.Executar(filtro));
+        }
+
         [HttpGet("obter-musica/{url}")]
         public async Task<IActionResult> ObterMusicaPorUrl(string url)
         {
-            var caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/storage", url);
+            var caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "storage", "Musicas",  url);
 
             if(!System.IO.File.Exists(caminho)) return NotFound();
 

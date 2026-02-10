@@ -3,38 +3,33 @@ namespace backend.Domain.Entities
     public class Musica
     {
 
-        public Musica(int id, string titulo, string urlMusica, List<Artista> artistas)
+        public Musica(int id, string titulo, string urlMusica)
         {
             Id = id;
             Titulo = titulo;
             UrlMusica = urlMusica;
-            Artistas = artistas;
         }
-        public Musica(string titulo, string urlMusica, List<Artista> artistas)
+        public Musica(string titulo, int idArtista, string urlMusica)
         {
             Titulo = titulo;
             UrlMusica = urlMusica;
-            Artistas = artistas;
+            IdArtista = idArtista;
         }
+
         public int Id { get; private set; }
         public string Titulo { get; private set; } = string.Empty;
         public string UrlMusica { get; private set; } = string.Empty;
         public string UrlImagem { get; private set; } = string.Empty;
-        public List<Artista> Artistas { get; private set; } = new();
+        public int IdArtista { get; private set; }
 
-        public static Musica Criar(string titulo, string urlMusica, List<Artista> artistas)
+        public static Musica Criar(string titulo, int idArtista, string urlMusica)
         {
-            return new Musica(titulo, urlMusica, artistas);
+            return new Musica(titulo, idArtista, urlMusica);
         }
 
-        public static Musica CriarComId(int id,string titulo, string urlMusica, List<Artista> artistas)
+        public static Musica Restaurar(int id, string titulo, string urlMusica)
         {
-            return new Musica(id, titulo, urlMusica, artistas);
-        }
-
-        public void AdicionarArtista(Artista artista)
-        {
-            Artistas.Add(artista);
+            return new Musica(id, titulo, urlMusica);
         }
     }
 }
