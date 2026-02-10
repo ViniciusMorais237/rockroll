@@ -32,9 +32,22 @@ namespace backend.Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> FollowArtista(int idArtista, int idUsuario)
+        {
+            var follow = new ArtistaFollowDB()
+            {
+                IdArtista = idArtista,
+                IdUsuario = idUsuario
+            };
+
+            _context.Follow.Add(follow);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<ArtistaDB?> ObterArtistaPorId(int id)
         {
-            return await _context.Artistas.FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.Artistas.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<Artista>> ObterArtistasPorPesquisa(string pesquisa)

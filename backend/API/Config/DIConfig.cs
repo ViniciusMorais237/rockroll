@@ -1,6 +1,7 @@
 using backend.Domain.Interfaces.Repositories;
 using backend.Domain.Interfaces.Services;
 using backend.Domain.Services;
+using backend.Domain.UseCases.ArtistasCommands;
 using backend.Domain.UseCases.ArtistasQueries;
 using backend.Domain.UseCases.MusicasQueries;
 using backend.Infrastructure.Mapping;
@@ -24,6 +25,7 @@ namespace backend.API.Config
 
             //USE CASES
             services.AddScoped<ObterArtistaPorId>();
+            services.AddScoped<FollowArtista>();
 
             //MUSICAS
             services.AddScoped<ObterMusicasPorFiltro>();

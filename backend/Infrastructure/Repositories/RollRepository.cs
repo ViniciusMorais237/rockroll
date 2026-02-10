@@ -73,12 +73,21 @@ namespace backend.Infrastructure.Repositories
         public async Task<IEnumerable<Musica?>?> ObterInfoMusicasPorArtistaId(int? idArtista)
         {
             if (idArtista == null) return [];
-            return await _context.Musicas.Where(m => m.IdArtista == idArtista).Select(m => Musica.Restaurar(m.Id, m.Titulo, m.UrlMusica)).ToListAsync();
+
+            return await _context.Musicas
+                .AsNoTracking()
+                .Where(m => m.IdArtista == idArtista)
+                .Select(m => Musica.Restaurar(m.Id, m.Titulo, m.UrlMusica))
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<MusicaSelect>?> ObterSelectMusicasPorFiltro(string filtro)
         {
-            var musicas = await _context.Musicas.Where(m => m.Titulo.Contains(filtro)).ToListAsync();
+            var musicas = await _context.Musicas
+                .AsNoTracking()
+                .Where(m => m.Titulo.Contains(filtro))
+                .ToListAsync();
+
             if (musicas == null) return null;
 
             return musicas.Select(m => new MusicaSelect() { Id = m.Id, Nome = m.Titulo });

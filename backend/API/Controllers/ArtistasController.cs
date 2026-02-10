@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Domain.Entities.DTOs.Commands;
 using backend.Domain.Interfaces.Services;
+using backend.Domain.UseCases.ArtistasCommands;
 using backend.Domain.UseCases.ArtistasQueries;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,12 @@ public class ArtistasController : ControllerBase
 {
     private readonly IArtistasService _artistaService;
     private readonly ObterArtistaPorId _obterArtistaPorId;
-    public ArtistasController(IArtistasService artistaService, ObterArtistaPorId obterArtistaPorId)
+    private readonly FollowArtista _followArtista;
+    public ArtistasController(IArtistasService artistaService, ObterArtistaPorId obterArtistaPorId, FollowArtista followArtista)
     {
         _artistaService = artistaService;
         _obterArtistaPorId = obterArtistaPorId;
+        _followArtista = followArtista;
     }
 
     [HttpPost("adicionar-artista")]
@@ -37,5 +40,11 @@ public class ArtistasController : ControllerBase
     public async Task<IActionResult> ObterArtistasPorPesquisa(string pesquisa)
     {
         return Ok(await _artistaService.ObterArtistasPorPesquisa(pesquisa));
+    }
+
+    [HttpPost("seguir-artista/{idArtista}")]
+    public async Task<IActionResult> SeguirArtista(int idArtista, int idUsuario)
+    {
+        return Ok(await _followArtista.Executar(idArtista, idUsuario));
     }
 }

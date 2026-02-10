@@ -11,6 +11,7 @@ public class RollDBContext : DbContext
     }
     public DbSet<MusicaDB> Musicas => Set<MusicaDB>();
     public DbSet<ArtistaDB> Artistas => Set<ArtistaDB>();
+    public DbSet<ArtistaFollowDB> Follow => Set<ArtistaFollowDB>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
