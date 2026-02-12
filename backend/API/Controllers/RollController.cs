@@ -46,29 +46,5 @@ namespace backend.API.Controllers
 
             return File(stream, "audio/mpeg", enableRangeProcessing: true);
         }
-
-        [HttpGet("obter-album/{idAlbum}")]
-        public async Task<IActionResult> ObterAlbum(string url)
-        {
-            var caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "storage", "Musicas", url);
-
-            if (!System.IO.File.Exists(caminho)) return NotFound();
-
-            var stream = new FileStream(caminho, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 64 * 1024, useAsync: true);
-
-            return File(stream, "audio/mpeg", enableRangeProcessing: true);
-        }
-
-        [HttpGet("obter-albuns/{idAlbum}")]
-        public async Task<IActionResult> ObterAlbuns(string url)
-        {
-            var caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "storage", "Musicas", url);
-
-            if (!System.IO.File.Exists(caminho)) return NotFound();
-
-            var stream = new FileStream(caminho, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 64 * 1024, useAsync: true);
-
-            return File(stream, "audio/mpeg", enableRangeProcessing: true);
-        }
     }
 }

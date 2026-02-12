@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace backend.Domain.Entities.DTOs.Queries
 {
-    public class AlbumResponse
+    public class AlbumResponseResumido
     {
         public int Id { get; set; }
-        public string? Titulo { get; set; }
-        public string? Imagem { get; set; }
-        public IEnumerable<MusicaResponse>? Musicas { get; set; }
+        public string? Titulo{ get; set; }
+        public string?  Imagem{ get; set; }
     }
 }

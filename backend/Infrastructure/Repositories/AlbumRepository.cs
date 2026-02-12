@@ -20,9 +20,16 @@ namespace backend.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task<bool> AdicionarMusicasAlbum(int idAlbum, int idMusica)
+        public async Task<bool> AdicionarMusicasAlbum(int idAlbum, int idMusica)
         {
-            throw new NotImplementedException();
+            var musica = new MusicaAlbumDB()
+            {
+                IdAlbum = idAlbum,
+                IdMusica = idMusica
+            };
+
+            _context.Add(musica);
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> AdicionarMusicasAlbum(int idAlbum, IEnumerable<int> idsMusicas)
@@ -62,14 +69,34 @@ namespace backend.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> ExcluirMusicaAlbum(int idAlbum, int idMusica)
+        public async Task<bool> ExcluirMusicaAlbum(int idAlbum, int idMusica)
         {
-            throw new NotImplementedException();
+            return await _context.MusicaAlbum
+                .Where(A => A.IdAlbum == idAlbum && A.IdMusica == idMusica)
+                .ExecuteDeleteAsync() > 0;
         }
 
-        public Task<bool> ObterAlbumPorId(int id)
+        public async Task<AlbumResponse?> ObterAlbumPorId(int id)
         {
-            throw new NotImplementedException();
+            var album = await _context.Albuns.FirstOrDefaultAsync(A => A.Id == id);
+            if (album == null) return null;
+
+            var query = from ma in _context.MusicaAlbum.AsNoTracking()
+                        join m in _context.Musicas.AsNoTracking()
+                        on ma.IdMusica equals m.Id
+                        where ma.IdAlbum == id
+                        select new { musicaInfo = m, musicaJoin = ma };
+
+            var resultado = await query.ToListAsync();
+            var musicas = resultado.Select(r => new MusicaResponse
+            {
+                Id = r.musicaInfo.Id,
+                Titulo = r.musicaInfo.Titulo,
+                UrlMusica = r.musicaInfo.UrlMusica,
+                UrlImagem = r.musicaInfo.UrlImagem
+            });
+
+            return new AlbumResponse { Id = id, Imagem = album.Imagem, Titulo = album.Titulo, Musicas = musicas };
         }
 
         public Task<bool> ObterAlbuns(string filtro, string nomeCampo)
@@ -77,12 +104,12 @@ namespace backend.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<AlbumResponse>?> ObterAlbunsPorIdArtista(int idArtista)
+        public async Task<IEnumerable<AlbumResponseResumido>?> ObterAlbunsPorIdArtista(int idArtista)
         {
             var albuns = await _context.Albuns.Where(a => a.IdArtista == idArtista).ToListAsync();
             if (albuns.Count == 0) return null;
 
-            return albuns.Select(a => new AlbumResponse() { Id = a.Id, Titulo = a.Titulo, Imagem = a.Imagem });
+            return albuns.Select(a => new AlbumResponseResumido() { Id = a.Id, Titulo = a.Titulo, Imagem = a.Imagem });
         }
     }
 }

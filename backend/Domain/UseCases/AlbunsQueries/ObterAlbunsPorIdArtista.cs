@@ -17,17 +17,17 @@ namespace backend.Domain.UseCases.AlbunsQueries
             _albumRepository = albumRepository;
         }
 
-        public async Task<ApiResponse<IEnumerable<AlbumResponse>>> Executar(int idArtista)
+        public async Task<ApiResponse<IEnumerable<AlbumResponseResumido>>> Executar(int idArtista)
         {
             var albuns = await _albumRepository.ObterAlbunsPorIdArtista(idArtista);
-            if (albuns == null) return new ApiResponse<IEnumerable<AlbumResponse>>()
+            if (albuns == null) return new ApiResponse<IEnumerable<AlbumResponseResumido>>()
             {
                 Mensagem = "Não foi possivel obter nenhum albúm",
                 Resultado = null,
                 StatusCode = 400
             };
 
-            return new ApiResponse<IEnumerable<AlbumResponse>>()
+            return new ApiResponse<IEnumerable<AlbumResponseResumido>>()
             {
                 Mensagem = "Sucesso",
                 Resultado = albuns,

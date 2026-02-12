@@ -21,11 +21,32 @@ namespace backend.API.Controllers
             return Ok(await _obterAlbunsPorIdArtista.Executar(idArtista));
         }
 
+        [HttpGet("obter-album/{id}")]
+        public async Task<IActionResult> ObterAlbum(int id,
+        [FromServices] ObterAlbum _obterAlbum)
+        {
+            return Ok(await _obterAlbum.Executar(id));
+        }
+
         [HttpPost("criar-album/{idArtista}")]
         public async Task<IActionResult> CriarAlbum(int idArtista, CriarAlbumCommand command,
         [FromServices] CriarAlbum _criarAlbum)
         {
             return Ok(await _criarAlbum.Executar(idArtista, command));
+        }
+
+        [HttpPost("adicionar-musica-album/{idAlbum}")]
+        public async Task<IActionResult> AdicionarMusicaAlbum(int idAlbum, int idMusica,
+        [FromServices] AdicionarMusicaAlbum _adicionarMusicaAlbum)
+        {
+            return Ok(await _adicionarMusicaAlbum.Executar(idAlbum, idMusica));
+        }
+
+        [HttpDelete("excluir-musica-album/{idAlbum}/{idMusica}")]
+        public async Task<IActionResult> CriarAlbum(int idAlbum, int idMusica,
+        [FromServices] ExcluirMusicaAlbum _excluirMusicaAlbum)
+        {
+            return Ok(await _excluirMusicaAlbum.Executar(idAlbum, idMusica));
         }
     }
 }

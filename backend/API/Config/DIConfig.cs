@@ -43,6 +43,9 @@ namespace backend.API.Config
 
             services.AddScoped<ObterAlbunsPorIdArtista>();
             services.AddScoped<CriarAlbum>();
+            services.AddScoped<ObterAlbum>();
+            services.AddScoped<AdicionarMusicaAlbum>();
+            services.AddScoped<ExcluirMusicaAlbum>();
 
             //MUSICAS
             services.AddScoped<ObterMusicasPorFiltro>();
