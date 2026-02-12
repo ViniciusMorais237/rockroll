@@ -25,10 +25,35 @@ namespace backend.Infrastructure.Repositories
 
                 if (musica == null) return null;
 
-                return new Musica(
+                return Musica.Restaurar(
+                    musica.Id,
                     musica.Titulo,
-                    0,
+                    musica.IdArtista,
                     musica.UrlMusica);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Musica>?> ObterInfoMusicasPorIds(IEnumerable<int> ids)
+        {
+            try
+            {
+                var musicas = await _context.Musicas
+                    .AsNoTracking()
+                    .Where(m => ids.Contains(m.Id))
+                    .ToListAsync();
+
+                if (musicas == null) return null;
+
+                return musicas.Select(m => new Musica(
+                    m.Id,
+                    m.Titulo,
+                    m.IdArtista,
+                    m.UrlMusica));
             }
             catch (Exception)
             {
@@ -77,7 +102,7 @@ namespace backend.Infrastructure.Repositories
             return await _context.Musicas
                 .AsNoTracking()
                 .Where(m => m.IdArtista == idArtista)
-                .Select(m => Musica.Restaurar(m.Id, m.Titulo, m.UrlMusica))
+                .Select(m => Musica.Restaurar(m.Id, m.Titulo, m.IdArtista, m.UrlMusica))
                 .ToListAsync();
         }
 

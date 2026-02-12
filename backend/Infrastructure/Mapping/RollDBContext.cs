@@ -12,6 +12,8 @@ public class RollDBContext : DbContext
     public DbSet<MusicaDB> Musicas => Set<MusicaDB>();
     public DbSet<PlaylistDB> Playlist => Set<PlaylistDB>();
     public DbSet<MusicaPlaylistDB> MusicaPlaylist => Set<MusicaPlaylistDB>();
+    public DbSet<AlbumDB> Albuns => Set<AlbumDB>();
+    public DbSet<MusicaAlbumDB> MusicaAlbum => Set<MusicaAlbumDB>();
     public DbSet<ArtistaDB> Artistas => Set<ArtistaDB>();
     public DbSet<ArtistaFollowDB> Follow => Set<ArtistaFollowDB>();
 

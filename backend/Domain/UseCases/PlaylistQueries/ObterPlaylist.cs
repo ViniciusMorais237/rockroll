@@ -21,6 +21,7 @@ namespace backend.Domain.UseCases.PlaylistQueries
         public async Task<ApiResponse<Playlist>> Executar(int id)
         {
             var playlist = await _playlistRepository.ObterPlaylistPorId(id);
+
             if (playlist == null) return new ApiResponse<Playlist>
             {
                 Mensagem = "Playlist não encontrada",
@@ -28,6 +29,7 @@ namespace backend.Domain.UseCases.PlaylistQueries
             };
 
             var musicas = await _playlistRepository.ObterMusicasPlaylist(id);
+            
             if (musicas == null) return new ApiResponse<Playlist> { StatusCode = 200, Mensagem = "Não foi possivel carregar musicas", Resultado = playlist };
 
             playlist.AdicionarMusicas(musicas);

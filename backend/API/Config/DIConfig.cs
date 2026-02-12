@@ -1,6 +1,8 @@
 using backend.Domain.Interfaces.Repositories;
 using backend.Domain.Interfaces.Services;
 using backend.Domain.Services;
+using backend.Domain.UseCases.AlbunsCommands;
+using backend.Domain.UseCases.AlbunsQueries;
 using backend.Domain.UseCases.ArtistasCommands;
 using backend.Domain.UseCases.ArtistasQueries;
 using backend.Domain.UseCases.MusicasQueries;
@@ -24,6 +26,8 @@ namespace backend.API.Config
 
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
 
+            services.AddScoped<IAlbumRepository, AlbumRepository>();
+
             services.AddScoped<IArquivoService, ArquivoService>();
 
 
@@ -33,7 +37,12 @@ namespace backend.API.Config
             services.AddScoped<ObterPlaylist>();
             services.AddScoped<CriarPlaylist>();
             services.AddScoped<AdicionarMusicaPlaylist>();
+
             services.AddScoped<FollowArtista>();
+
+
+            services.AddScoped<ObterAlbunsPorIdArtista>();
+            services.AddScoped<CriarAlbum>();
 
             //MUSICAS
             services.AddScoped<ObterMusicasPorFiltro>();

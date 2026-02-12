@@ -25,6 +25,12 @@ namespace backend.API.Controllers
             _obterPlaylist = obterPlaylist;
         }
 
+        [HttpGet("obter-playlists/{idArtista}")]
+        public async Task<IActionResult> ObterPlaylists(int idArtista)
+        {
+            return Ok(await _obterPlaylist.Executar(idArtista));
+        }
+
         [HttpGet("obter-playlist/{id}")]
         public async Task<IActionResult> ObterPlaylist(int id)
         {
@@ -39,6 +45,12 @@ namespace backend.API.Controllers
 
         [HttpPost("adicionar-musica-playlist")]
         public async Task<IActionResult> AdicionarMusicaPlaylist(int idMusica, int idPlaylist)
+        {
+            return Ok(await _adicionarMusicaPlaylist.Executar(idMusica, idPlaylist));
+        }
+
+        [HttpPost("excluir-musica-playlist")]
+        public async Task<IActionResult> ExcluirMusicaPlaylist(int idMusica, int idPlaylist)
         {
             return Ok(await _adicionarMusicaPlaylist.Executar(idMusica, idPlaylist));
         }

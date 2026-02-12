@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace backend.Domain.Entities
 {
-    public class Playlist
+    public class Playlist 
     {
         private Playlist(int idUsuario, string? titulo, string? imagem, IEnumerable<Musica>? musicas)
         {

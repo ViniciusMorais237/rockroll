@@ -13,5 +13,4 @@ public interface IArtistasRepository
     Task<ArtistaDB?> ObterArtistaPorId(int id);
     Task<IEnumerable<Artista>> ObterArtistasPorPesquisa(string pesquisa);
     Task<bool> FollowArtista(int idArtista, int idUsuario);
-
 }

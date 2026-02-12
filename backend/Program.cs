@@ -2,6 +2,8 @@ using backend.API.Config;
 using backend.Infrastructure.Mapping;
 using Microsoft.EntityFrameworkCore;
 
+//$env:ASPNETCORE_ENVIRONMENT="Development"
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
