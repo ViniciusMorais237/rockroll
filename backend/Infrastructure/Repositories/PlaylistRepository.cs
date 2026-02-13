@@ -66,5 +66,14 @@ namespace backend.Infrastructure.Repositories
 
             return Playlist.Criar(playlistDb.IdUsuario, playlistDb.Titulo, playlistDb.Imagem, null);
         }
+
+        public async Task<IEnumerable<Playlist>?> ObterPlaylistsPorIdUsuario(int idUsuario)
+        {
+            var listaPlaylistDB = await _context.Playlist.AsNoTracking().Where(p => p.IdUsuario == idUsuario).ToListAsync();
+
+            if (listaPlaylistDB == null) return null;
+
+            return listaPlaylistDB.Select(p => Playlist.Criar(p.IdUsuario, p.Titulo, p.Imagem, null));
+        }
     }
 }

@@ -14,21 +14,23 @@ namespace backend.API.Controllers
     public class PlaylistsController : ControllerBase
     {
         private readonly ObterPlaylist _obterPlaylist;
+        private readonly ObterPlaylistsPorIdUsuario _obterPlaylistsPorIdUsuario;
         private readonly CriarPlaylist _criarPlaylist;
         private readonly AdicionarMusicaPlaylist _adicionarMusicaPlaylist;
         // private readonly AdicionarMusicasPlaylist _adicionarMusicasPlaylist;
 
-        public PlaylistsController(CriarPlaylist criarPlaylist, AdicionarMusicaPlaylist adicionarMusicaPlaylist, ObterPlaylist obterPlaylist)
+        public PlaylistsController(CriarPlaylist criarPlaylist, AdicionarMusicaPlaylist adicionarMusicaPlaylist, ObterPlaylist obterPlaylist, ObterPlaylistsPorIdUsuario obterPlaylistsPorIdUsuario)
         {
             _criarPlaylist = criarPlaylist;
             _adicionarMusicaPlaylist = adicionarMusicaPlaylist;
             _obterPlaylist = obterPlaylist;
+            _obterPlaylistsPorIdUsuario = obterPlaylistsPorIdUsuario;
         }
 
-        [HttpGet("obter-playlists/{idArtista}")]
-        public async Task<IActionResult> ObterPlaylists(int idArtista)
+        [HttpGet("obter-playlists/{idUsuario}")]
+        public async Task<IActionResult> ObterPlaylists(int idUsuario)
         {
-            return Ok(await _obterPlaylist.Executar(idArtista));
+            return Ok(await _obterPlaylistsPorIdUsuario.Executar(idUsuario));
         }
 
         [HttpGet("obter-playlist/{id}")]

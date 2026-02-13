@@ -16,7 +16,7 @@ namespace backend.Domain.UseCases.MusicasQueries
             _musicasRepository = musicasRepository;
         }
 
-        public async Task<IEnumerable<MusicaSelect?>?> Executar(string filtro)
+        public async Task<IEnumerable<MusicaSelect?>?> Executar(string? filtro)
         {
             return await _musicasRepository.ObterSelectMusicasPorFiltro(filtro);
         }

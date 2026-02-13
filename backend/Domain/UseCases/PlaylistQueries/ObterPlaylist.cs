@@ -19,7 +19,7 @@ namespace backend.Domain.UseCases.PlaylistQueries
         }
 
         public async Task<ApiResponse<Playlist>> Executar(int id)
-        {
+        {//arrumar
             var playlist = await _playlistRepository.ObterPlaylistPorId(id);
 
             if (playlist == null) return new ApiResponse<Playlist>

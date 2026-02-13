@@ -8,7 +8,7 @@ namespace backend.Domain.Interfaces.Repositories
         Task<Musica?> ObterInfoMusicaPorId(int id);
 
         Task<IEnumerable<Musica>?> ObterInfoMusicasPorIds(IEnumerable<int> ids);
-        Task<IEnumerable<MusicaSelect>?> ObterSelectMusicasPorFiltro(string filtro);
+        Task<IEnumerable<MusicaSelect>?> ObterSelectMusicasPorFiltro(string? filtro);
         Task<IEnumerable<Musica?>?> ObterInfoMusicasPorArtistaId(int? id);
         Task<IEnumerable<Artista>?> ObterArtistasPorMusicaId(int idMusica);
         Task<int> InserirMusica(Musica musica);

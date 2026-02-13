@@ -106,13 +106,15 @@ namespace backend.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<MusicaSelect>?> ObterSelectMusicasPorFiltro(string filtro)
+        public async Task<IEnumerable<MusicaSelect>?> ObterSelectMusicasPorFiltro(string? filtro)
         {
-            var musicas = await _context.Musicas
-                .AsNoTracking()
-                .Where(m => m.Titulo.Contains(filtro))
-                .ToListAsync();
+            var query = _context.Musicas
+                .AsNoTracking();
 
+            if (!string.IsNullOrEmpty(filtro))
+                query = query.Where(m => m.Titulo.Contains(filtro));
+
+            var musicas = await query.ToListAsync();
             if (musicas == null) return null;
 
             return musicas.Select(m => new MusicaSelect() { Id = m.Id, Nome = m.Titulo });

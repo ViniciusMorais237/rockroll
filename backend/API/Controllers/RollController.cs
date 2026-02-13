@@ -28,8 +28,8 @@ namespace backend.API.Controllers
             return Ok(await _rollService.InserirMusica(command));
         }
 
-        [HttpGet("obter-musicas/{filtro}")]
-        public async Task<IActionResult> ObterMusicasPorFiltro(string filtro)
+        [HttpGet("obter-musicas")]
+        public async Task<IActionResult> ObterMusicasPorFiltro([FromQuery]string? filtro)
         {
             //adicionar filtro em outros campos a partir de 2 musicas -- por enquanto so no nome da musica e do usuario
             return Ok(await _obterMusicasPorFiltro.Executar(filtro));

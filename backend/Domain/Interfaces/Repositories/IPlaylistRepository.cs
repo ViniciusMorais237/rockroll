@@ -14,7 +14,10 @@ namespace backend.Domain.Interfaces.Repositories
         Task<int> CriarPlaylist(Playlist playlist);
         Task<Playlist?> ObterPlaylistPorId(int id);
 
-        
+        Task<IEnumerable<Playlist>?> ObterPlaylistsPorIdUsuario(int idUsuario);
+
+
+
         Task<IEnumerable<Musica?>?> ObterMusicasPlaylist(int id);
         Task<bool> InserirMusicaPlaylist(int idMusica, int idPlaylist);
     }
