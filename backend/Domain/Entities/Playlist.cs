@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace backend.Domain.Entities
 {
-    public class Playlist 
+    public class Playlist
     {
         private Playlist(int idUsuario, string? titulo, string? imagem, IEnumerable<Musica>? musicas)
         {
@@ -26,9 +26,11 @@ namespace backend.Domain.Entities
             return new Playlist(idUsuario, titulo, imagem, musicas);
         }
 
-        public static Playlist Recriar(int idUsuario, string? titulo, string? imagem)
+        public static Playlist Recriar(int id, int idUsuario, string? titulo, string? imagem)
         {
-            return new Playlist(idUsuario, titulo, imagem, null);
+            var playlist = new Playlist(idUsuario, titulo, imagem, null);
+            playlist.DefinirId(id);
+            return playlist;
         }
 
         public void AdicionarMusicas(IEnumerable<Musica?>? musicas)
@@ -38,6 +40,11 @@ namespace backend.Domain.Entities
             Musicas ??= [];
 
             Musicas.AddRange(musicas!);
+        }
+
+        public void DefinirId(int id)
+        {
+            Id = id;
         }
     }
 }

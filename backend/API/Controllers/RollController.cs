@@ -24,7 +24,8 @@ namespace backend.API.Controllers
         }
 
         [HttpPost("inserir-musica")]
-        public async Task<IActionResult> InserirMusica(CriarMusicaCommand command)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> InserirMusica([FromForm]CriarMusicaCommand command)
         {
             return Ok(await _rollService.InserirMusica(command));
         }

@@ -73,7 +73,7 @@ namespace backend.Infrastructure.Repositories
 
             if (listaPlaylistDB == null) return null;
 
-            return listaPlaylistDB.Select(p => Playlist.Criar(p.IdUsuario, p.Titulo, p.Imagem, null));
+            return listaPlaylistDB.Select(p => Playlist.Recriar(p.Id, p.IdUsuario, p.Titulo, p.Imagem));
         }
     }
 }

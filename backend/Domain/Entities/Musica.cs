@@ -16,8 +16,9 @@ namespace backend.Domain.Entities
         public string UrlImagem { get; private set; } = string.Empty;
         public int IdArtista { get; private set; }
 
-        public static Musica Criar( string titulo, int idArtista, string urlMusica)
+        public static Musica Criar(string titulo, int idArtista, string urlMusica)
         {
+            if (idArtista <= 0) throw new Exception("Não é possivel criar música sem artista");
             return new Musica(null, titulo, idArtista, urlMusica);
         }
 

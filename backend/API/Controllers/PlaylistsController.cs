@@ -33,8 +33,8 @@ namespace backend.API.Controllers
             return Ok(await _obterPlaylistsPorIdUsuario.Executar(idUsuario));
         }
 
-        [HttpGet("obter-playlist/{id}")]
-        public async Task<IActionResult> ObterPlaylist(int id)
+        [HttpGet("obter-playlist/")]
+        public async Task<IActionResult> ObterPlaylist([FromQuery]int id)
         {
             return Ok(await _obterPlaylist.Executar(id));
         }
