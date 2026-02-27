@@ -37,6 +37,12 @@ namespace backend.API.Controllers
             return Ok(await _obterMusicasPorFiltro.Executar(filtro));
         }
 
+        [HttpDelete("deletar-musica/{id}")]
+        public async Task<IActionResult> DeletarMusica(int id)
+        {
+            return Ok(await _rollService.DeletarMusica(id));
+        }
+
         [HttpGet("obter-arquivo/{local}/{url}")]
         public async Task<IActionResult> ObterMusicaPorUrl(string local, string url)
         {

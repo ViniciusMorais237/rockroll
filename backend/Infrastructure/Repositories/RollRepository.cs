@@ -29,7 +29,8 @@ namespace backend.Infrastructure.Repositories
                     musica.Id,
                     musica.Titulo,
                     musica.IdArtista,
-                    musica.UrlMusica);
+                    musica.UrlMusica,
+                    musica.UrlImagem);
             }
             catch (Exception)
             {
@@ -53,7 +54,8 @@ namespace backend.Infrastructure.Repositories
                     m.Id,
                     m.Titulo,
                     m.IdArtista,
-                    m.UrlMusica));
+                    m.UrlMusica,
+                    m.UrlImagem));
             }
             catch (Exception)
             {
@@ -102,7 +104,7 @@ namespace backend.Infrastructure.Repositories
             return await _context.Musicas
                 .AsNoTracking()
                 .Where(m => m.IdArtista == idArtista)
-                .Select(m => Musica.Restaurar(m.Id, m.Titulo, m.IdArtista, m.UrlMusica))
+                .Select(m => Musica.Restaurar(m.Id, m.Titulo, m.IdArtista, m.UrlMusica, m.UrlImagem))
                 .ToListAsync();
         }
 
@@ -119,6 +121,11 @@ namespace backend.Infrastructure.Repositories
 
             return musicas.Select(m => new MusicaSelect() { Id = m.Id, Nome = m.Titulo });
 
+        }
+
+        public async Task<bool> DeletarMusica(int id)
+        {
+            return await _context.Musicas.Where(m => m.Id == id).ExecuteDeleteAsync() > 0;
         }
     }
 }

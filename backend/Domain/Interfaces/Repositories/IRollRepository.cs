@@ -12,6 +12,7 @@ namespace backend.Domain.Interfaces.Repositories
         Task<IEnumerable<Musica?>?> ObterInfoMusicasPorArtistaId(int? id);
         Task<IEnumerable<Artista>?> ObterArtistasPorMusicaId(int idMusica);
         Task<int> InserirMusica(Musica musica);
+        Task<bool> DeletarMusica(int id);
         Task<bool> InserirArtistasMusica(int idMusica, List<Artista> artistas);
     }
 }

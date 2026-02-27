@@ -55,7 +55,7 @@ namespace backend.Infrastructure.Repositories
                 .Where(m => idsMusicas.Contains(m.Id))
                 .ToListAsync();
 
-            return musicasDb.Select(m => Musica.Restaurar(m.Id, m.Titulo, m.IdArtista, m.UrlMusica));
+            return musicasDb.Select(m => Musica.Restaurar(m.Id, m.Titulo, m.IdArtista, m.UrlMusica, m.UrlImagem));
         }
 
         public async Task<Playlist?> ObterPlaylistPorId(int id)

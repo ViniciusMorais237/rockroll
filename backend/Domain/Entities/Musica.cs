@@ -2,11 +2,12 @@ namespace backend.Domain.Entities
 {
     public class Musica
     {
-        public Musica(int? id, string titulo, int idArtista, string urlMusica)
+        public Musica(int? id, string titulo, int idArtista, string urlMusica, string urlImagem)
         {
             Id = id;
             Titulo = titulo;
             UrlMusica = urlMusica;
+            UrlImagem = urlImagem;;
             IdArtista = idArtista;
         }
 
@@ -16,15 +17,15 @@ namespace backend.Domain.Entities
         public string UrlImagem { get; private set; } = string.Empty;
         public int IdArtista { get; private set; }
 
-        public static Musica Criar(string titulo, int idArtista, string urlMusica)
+        public static Musica Criar(string titulo, int idArtista, string urlMusica, string urlImagem)
         {
             if (idArtista <= 0) throw new Exception("Não é possivel criar música sem artista");
-            return new Musica(null, titulo, idArtista, urlMusica);
+            return new Musica(null, titulo, idArtista, urlMusica, urlImagem);
         }
 
-        public static Musica Restaurar(int id, string titulo, int idArtista, string urlMusica)
+        public static Musica Restaurar(int id, string titulo, int idArtista, string urlMusica, string urlImagem)
         {
-            return new Musica(id, titulo, idArtista, urlMusica);
+            return new Musica(id, titulo, idArtista, urlMusica, urlImagem);
         }
     }
 }

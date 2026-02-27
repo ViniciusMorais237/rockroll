@@ -7,5 +7,6 @@ namespace backend.Domain.Interfaces.Services
     {
         Task<Musica?> ObterInfoMusicaPorId(int id);
         Task<int> InserirMusica(CriarMusicaCommand command);
+        Task<bool> DeletarMusica(int id);
     }
 }

@@ -20,9 +20,15 @@ namespace backend.Domain.Services
             _uow = uow;
         }
 
+        public async Task<bool> DeletarMusica(int id)
+        {
+            return await _rollRepository.DeletarMusica(id);
+        }
+
         public async Task<int> InserirMusica(CriarMusicaCommand command)
         {
             var urlMusica = "";
+            var urlImagem = "";
             try
             {
                 await _uow.Begin();
@@ -30,10 +36,15 @@ namespace backend.Domain.Services
                 urlMusica = await _arquivoService
                     .ArmazenarERetornarCaminho(command.FileMusica, "Musicas");
 
+                if (command.FileImagem != null)
+                    urlImagem = await _arquivoService
+                    .ArmazenarERetornarCaminho(command.FileImagem, "Images");
+
                 var musica = Musica.Criar(
                     command.Titulo,
                     command.IdArtista,
-                    urlMusica);
+                    urlMusica,
+                    urlImagem);
 
                 var idMusica = await _rollRepository.InserirMusica(musica);
 
@@ -50,8 +61,18 @@ namespace backend.Domain.Services
                     "Musicas",
                     urlMusica);
 
+                var caminhoImagem = Path.Combine(
+                _env.ContentRootPath,
+                "wwwroot",
+                "storage",
+                "Musicas",
+                urlMusica);
+
                 if (File.Exists(caminhoMusica))
                     File.Delete(caminhoMusica);
+
+                if (File.Exists(caminhoImagem))
+                    File.Delete(caminhoImagem);
 
                 await _uow.Rollback();
 
