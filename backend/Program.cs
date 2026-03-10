@@ -12,6 +12,12 @@ builder.Services.AddCors(
                     .AllowAnyHeader()
                     .AllowAnyMethod()));
 
+builder.Services.AddCors(
+options => options.AddPolicy(name: "local-angular",
+policy => policy.WithOrigins("http://localhost:4200")
+.AllowAnyHeader()
+.AllowAnyMethod()));
+
 builder.Services.AddDependencies(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -30,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("local-react");
+app.UseCors("local-angular");
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
