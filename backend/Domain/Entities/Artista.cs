@@ -1,6 +1,6 @@
 namespace backend.Domain.Entities
 {
-    public class Artista
+    public class                    Artista
     {
         public Artista(int? id, string nome, bool premium, string urlFoto = "")
         {
