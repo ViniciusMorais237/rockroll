@@ -10,6 +10,6 @@ namespace backend.Domain.Interfaces.Services
         Task<string> RetornarCaminho();
         Task<string> RetornarCaminho(string pasta);
         string RetornarCaminho(string pasta, string arquivo);
-        Task<string> ArmazenarERetornarCaminho(IFormFile arquivo, string pasta);
+        Task<string?> ArmazenarERetornarCaminho(IFormFile? arquivo, string pasta);
     }
 }

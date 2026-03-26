@@ -42,7 +42,7 @@ public class ArtistasController : ControllerBase
         return Ok(await _artistaService.ObterArtistasPorPesquisa(pesquisa));
     }
 
-    [HttpPost("seguir-artista/{idArtista}")]
+    [HttpPost("seguir-artista/{idArtista}/{idUsuario}")]
     public async Task<IActionResult> SeguirArtista(int idArtista, int idUsuario)
     {
         return Ok(await _followArtista.Executar(idArtista, idUsuario));

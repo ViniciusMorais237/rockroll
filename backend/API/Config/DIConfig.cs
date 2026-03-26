@@ -21,6 +21,9 @@ namespace backend.API.Config
             services.AddScoped<IRollService, RollService>();
             services.AddScoped<IRollRepository, RollRepository>();
 
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
             services.AddScoped<IArtistasService, ArtistasService>();
             services.AddScoped<IArtistasRepository, ArtistasRepository>();
 
@@ -29,6 +32,8 @@ namespace backend.API.Config
             services.AddScoped<IAlbumRepository, AlbumRepository>();
 
             services.AddScoped<IArquivoService, ArquivoService>();
+
+            services.AddScoped<IPasswordService, PasswordService>();
 
 
             //USE CASES

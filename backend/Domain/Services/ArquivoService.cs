@@ -15,8 +15,9 @@ namespace backend.Domain.Services
             _env = env;
         }
 
-        public async Task<string> ArmazenarERetornarCaminho(IFormFile arquivo, string pasta)
+        public async Task<string?> ArmazenarERetornarCaminho(IFormFile? arquivo, string pasta)
         {
+            if (arquivo is null) return null; 
             var caminho = $"storage/{pasta}";
             var storagePath = Path.Combine(_env.WebRootPath, caminho);
 

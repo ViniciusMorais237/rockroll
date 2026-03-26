@@ -15,6 +15,7 @@ public class RollDBContext : DbContext
     public DbSet<AlbumDB> Albuns => Set<AlbumDB>();
     public DbSet<MusicaAlbumDB> MusicaAlbum => Set<MusicaAlbumDB>();
     public DbSet<ArtistaDB> Artistas => Set<ArtistaDB>();
+    public DbSet<UsuarioDB> Usuarios => Set<UsuarioDB>();
     public DbSet<ArtistaFollowDB> Follow => Set<ArtistaFollowDB>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
